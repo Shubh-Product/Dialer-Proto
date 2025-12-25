@@ -23,9 +23,6 @@ const DialingModal = ({ isOpen, lead, callInProgress, onClose, onStartCall, onEn
         
         <div className="dialing-content">
           <div className="contact-info">
-            <div className="contact-avatar">
-              {(lead.lead_name === 'N/A' || !lead.lead_name) ? '?' : lead.lead_name.charAt(0)}
-            </div>
             <div className="contact-details">
               <h3>{lead.client_name || lead.lead_name || 'N/A'}</h3>
               <p className="partner">{lead.company_name || lead.partner_name}</p>
