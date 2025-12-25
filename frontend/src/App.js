@@ -454,16 +454,6 @@ const LeadManagement = () => {
                   <td className="follow-up">
                     {lead.next_follow_up_date} {lead.next_follow_up_time}
                   </td>
-                  <td className="calls-natc" data-testid={`calls-natc-${lead.id}`}>
-                    <span className={`call-count ${lead.calls_natc > 0 ? 'has-calls' : ''}`}>
-                      {lead.calls_natc}
-                    </span>
-                  </td>
-                  <td className="calls-c" data-testid={`calls-c-${lead.id}`}>
-                    <span className={`call-count connected ${lead.calls_c > 0 ? 'has-calls' : ''}`}>
-                      {lead.calls_c}
-                    </span>
-                  </td>
                   <td>{lead.type}</td>
                   <td>
                     <span className={`priority-badge ${getPriorityColor(lead.priority)}`}>
