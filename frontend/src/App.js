@@ -21,7 +21,6 @@ const LeadManagement = () => {
   const fetchLeads = async () => {
     try {
       setLoading(true);
-      // Try to seed data first
       await axios.post(`${API}/seed`);
       const response = await axios.get(`${API}/leads`);
       setLeads(response.data);
@@ -42,30 +41,31 @@ const LeadManagement = () => {
 
   const sortedLeads = [...leads].sort((a, b) => {
     if (!sortConfig.key) return 0;
-    
     const aVal = a[sortConfig.key];
     const bVal = b[sortConfig.key];
-    
     if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
     if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
     return 0;
   });
 
-  const handleCallClick = (lead) => {
-    console.log("handleCallClick called with lead:", lead.id, lead.mobile);
-    console.log("Current isDialogOpen:", isDialogOpen);
+  const openDialer = (lead) => {
     setDialingLead(lead);
     setIsDialogOpen(true);
     setCallInProgress(false);
-    console.log("State setters called");
   };
 
-  const handleStartCall = async () => {
+  const closeDialer = () => {
+    setIsDialogOpen(false);
+    setCallInProgress(false);
+  };
+
+  const handleStartCall = () => {
     setCallInProgress(true);
-    // Simulate dialing animation
   };
 
   const handleEndCall = async (callType) => {
+    if (!dialingLead) return;
+    
     try {
       await axios.post(`${API}/calls`, {
         lead_id: dialingLead.id,
@@ -73,29 +73,22 @@ const LeadManagement = () => {
         duration: 0,
         notes: ""
       });
-      
-      // Refresh leads to get updated call counts
       const response = await axios.get(`${API}/leads`);
       setLeads(response.data);
     } catch (e) {
       console.error("Error logging call:", e);
     }
     
-    setIsDialogOpen(false);
-    setCallInProgress(false);
+    closeDialer();
     setDialingLead(null);
   };
 
   const getPriorityColor = (priority) => {
-    switch (priority.toLowerCase()) {
-      case 'hot':
-        return 'bg-red-100 text-red-700';
-      case 'warm':
-        return 'bg-yellow-100 text-yellow-700';
-      case 'cold':
-        return 'bg-blue-100 text-blue-700';
-      default:
-        return 'bg-gray-100 text-gray-700';
+    switch (priority?.toLowerCase()) {
+      case 'hot': return 'bg-red-100 text-red-700';
+      case 'warm': return 'bg-yellow-100 text-yellow-700';
+      case 'cold': return 'bg-blue-100 text-blue-700';
+      default: return 'bg-gray-100 text-gray-700';
     }
   };
 
@@ -115,18 +108,6 @@ const LeadManagement = () => {
         <div className="header-left">
           <div className="logo">B</div>
           <h1>Lead Management</h1>
-          <button 
-            type="button"
-            style={{marginLeft: '20px', padding: '8px 16px', background: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'}}
-            onClick={() => {
-              console.log("TEST BUTTON CLICKED");
-              setIsDialogOpen(true);
-              setDialingLead({id: 'test', lead_name: 'Test', partner_name: 'Test Partner', mobile: '1234567890', calls_natc: 0, calls_c: 0});
-            }}
-            data-testid="test-call-btn"
-          >
-            Test Call Dialog
-          </button>
         </div>
         <div className="header-center">
           <div className="search-box">
@@ -246,11 +227,7 @@ const LeadManagement = () => {
                       type="button"
                       className="action-btn call-btn" 
                       title="Call"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleCallClick(lead);
-                      }}
+                      onClick={() => openDialer(lead)}
                       data-testid={`call-btn-${lead.id}`}
                     >
                       <Phone size={16} />
@@ -266,18 +243,13 @@ const LeadManagement = () => {
         )}
       </div>
 
-      {/* Debug state info */}
-      <div style={{position: 'fixed', bottom: 10, left: 10, background: '#fff', padding: '5px', fontSize: '12px', zIndex: 9999, border: '1px solid #ccc'}}>
-        Dialog: {isDialogOpen ? 'Open' : 'Closed'} | Lead: {dialingLead ? dialingLead.mobile : 'None'}
-      </div>
-
-      {/* Dialing Dialog */}
+      {/* Dialing Modal */}
       {isDialogOpen && dialingLead && (
-        <div className="modal-overlay" onClick={() => setIsDialogOpen(false)} data-testid="modal-overlay">
+        <div className="modal-overlay" onClick={closeDialer} data-testid="modal-overlay">
           <div className="modal-content dialing-dialog" onClick={(e) => e.stopPropagation()} data-testid="dialing-dialog">
             <div className="modal-header">
               <h2>{callInProgress ? 'Calling...' : 'Dial Number'}</h2>
-              <button className="close-btn" onClick={() => setIsDialogOpen(false)}>
+              <button type="button" className="close-btn" onClick={closeDialer}>
                 <X size={20} />
               </button>
             </div>
@@ -322,6 +294,7 @@ const LeadManagement = () => {
                 {!callInProgress ? (
                   <>
                     <button 
+                      type="button"
                       className="btn-call-start"
                       onClick={handleStartCall}
                       data-testid="start-call-btn"
@@ -329,8 +302,9 @@ const LeadManagement = () => {
                       <Phone size={18} /> Start Call
                     </button>
                     <button 
+                      type="button"
                       className="btn-cancel"
-                      onClick={() => setIsDialogOpen(false)}
+                      onClick={closeDialer}
                     >
                       Cancel
                     </button>
@@ -338,6 +312,7 @@ const LeadManagement = () => {
                 ) : (
                   <>
                     <button 
+                      type="button"
                       className="btn-call-end natc"
                       onClick={() => handleEndCall('natc')}
                       data-testid="end-natc-btn"
@@ -345,6 +320,7 @@ const LeadManagement = () => {
                       <PhoneOff size={18} /> Not Answered
                     </button>
                     <button 
+                      type="button"
                       className="btn-call-end connected"
                       onClick={() => handleEndCall('c')}
                       data-testid="end-connected-btn"
