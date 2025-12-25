@@ -947,6 +947,11 @@ body {
   color: #059669;
 }
 
+.demo-status.done {
+  background: #d1fae5;
+  color: #059669;
+}
+
 .demo-status.cancelled {
   background: #fee2e2;
   color: #dc2626;
