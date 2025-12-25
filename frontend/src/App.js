@@ -234,7 +234,7 @@ const MyDemosPopup = ({ onDialClick }) => {
                   <div className="demos-col status-col">
                     <div className="demo-status-wrapper">
                       <span className={`demo-status ${demo.status.toLowerCase()}`}>
-                        {demo.status === 'Completed' ? 'Call Done' : demo.status}
+                        {demo.status}
                       </span>
                       {demo.status === 'Pending' && (
                         <button 
