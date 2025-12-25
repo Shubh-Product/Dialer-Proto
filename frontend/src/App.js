@@ -205,13 +205,6 @@ const MyDemosPopup = ({ onDialClick }) => {
             </label>
           </div>
 
-          {/* Table Header */}
-          <div className="demos-table-header">
-            <div className="demos-col time-col">Time Slot</div>
-            <div className="demos-col action-col">Action</div>
-            <div className="demos-col status-col">Status</div>
-          </div>
-
           {/* Table Body */}
           <div className="demos-table-body">
             {loading ? (
