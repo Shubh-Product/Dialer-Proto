@@ -73,6 +73,40 @@ class LeadUpdate(BaseModel):
     calls_c: Optional[int] = None
 
 
+class Demo(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    time_slot: str = ""  # e.g., "10:00 - 10:30"
+    demo_time: str = ""  # e.g., "10:15 AM"
+    client_name: str = ""
+    company_name: str = ""
+    mobile: str = ""
+    status: str = "Pending"  # Pending, Completed, Cancelled
+    date_type: str = "Today"  # Today, Tomorrow
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class DemoCreate(BaseModel):
+    time_slot: str = ""
+    demo_time: str = ""
+    client_name: str = ""
+    company_name: str = ""
+    mobile: str = ""
+    status: str = "Pending"
+    date_type: str = "Today"
+
+
+class DemoUpdate(BaseModel):
+    time_slot: Optional[str] = None
+    demo_time: Optional[str] = None
+    client_name: Optional[str] = None
+    company_name: Optional[str] = None
+    mobile: Optional[str] = None
+    status: Optional[str] = None
+    date_type: Optional[str] = None
+
+
 class CallLog(BaseModel):
     model_config = ConfigDict(extra="ignore")
     
