@@ -384,6 +384,17 @@ body {
   color: #047857;
 }
 
+.action-btn.whatsapp-btn {
+  color: #25d366;
+  border-color: #d1fae5;
+  background: #ecfdf5;
+}
+
+.action-btn.whatsapp-btn:hover {
+  background: #d1fae5;
+  color: #128c7e;
+}
+
 /* Dialing Dialog */
 .modal-overlay {
   position: fixed;
