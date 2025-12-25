@@ -10,8 +10,8 @@ const LeadManagement = () => {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
-  const [dialingLead, setDialingLead] = useState({id: 'test', lead_name: 'Test', partner_name: 'Test Partner', mobile: '1234567890', calls_natc: 0, calls_c: 0});
-  const [isDialogOpen, setIsDialogOpen] = useState(true);
+  const [dialingLead, setDialingLead] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [callInProgress, setCallInProgress] = useState(false);
 
   useEffect(() => {
