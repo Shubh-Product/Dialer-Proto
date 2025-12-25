@@ -482,11 +482,13 @@ body {
   font-weight: 600;
   color: #1e293b;
   margin-bottom: 4px;
+  text-align: center;
 }
 
 .contact-details .partner {
   color: #64748b;
   font-size: 14px;
+  text-align: center;
 }
 
 .phone-number {
