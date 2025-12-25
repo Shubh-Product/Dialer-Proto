@@ -248,6 +248,51 @@ async def get_call_logs(lead_id: str):
     return calls
 
 
+# Demo Routes
+@api_router.get("/demos", response_model=List[Demo])
+async def get_demos():
+    demos = await db.demos.find({}, {"_id": 0}).to_list(100)
+    return demos
+
+
+@api_router.post("/demos", response_model=Demo)
+async def create_demo(input: DemoCreate):
+    demo_dict = input.model_dump()
+    demo_obj = Demo(**demo_dict)
+    
+    doc = demo_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    
+    await db.demos.insert_one(doc)
+    return demo_obj
+
+
+@api_router.put("/demos/{demo_id}", response_model=Demo)
+async def update_demo(demo_id: str, input: DemoUpdate):
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    
+    result = await db.demos.update_one(
+        {"id": demo_id},
+        {"$set": update_data}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Demo not found")
+    
+    demo = await db.demos.find_one({"id": demo_id}, {"_id": 0})
+    return demo
+
+
+@api_router.delete("/demos/{demo_id}")
+async def delete_demo(demo_id: str):
+    result = await db.demos.delete_one({"id": demo_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Demo not found")
+    return {"message": "Demo deleted successfully"}
+
+
 # Seed sample data
 @api_router.post("/seed")
 async def seed_data():
