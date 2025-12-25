@@ -424,11 +424,11 @@ const LeadManagement = () => {
                 <th onClick={() => handleSort('partner_name')} className="sortable">
                   Partner Name <SortIcon column="partner_name" />
                 </th>
+                <th onClick={() => handleSort('created_at')} className="sortable">
+                  Lead Date <SortIcon column="created_at" />
+                </th>
                 <th onClick={() => handleSort('next_follow_up_date')} className="sortable">
                   Next Follow Up <SortIcon column="next_follow_up_date" />
-                </th>
-                <th onClick={() => handleSort('type')} className="sortable">
-                  Type <SortIcon column="type" />
                 </th>
                 <th onClick={() => handleSort('priority')} className="sortable">
                   Priority <SortIcon column="priority" />
@@ -444,17 +444,28 @@ const LeadManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedLeads.map((lead) => (
+              {sortedLeads.map((lead) => {
+                const formatLeadDate = (dateStr) => {
+                  if (!dateStr) return 'N/A';
+                  const date = new Date(dateStr);
+                  const day = date.getDate();
+                  const month = date.toLocaleString('en-US', { month: 'short' });
+                  const hours = date.getHours().toString().padStart(2, '0');
+                  const mins = date.getMinutes().toString().padStart(2, '0');
+                  return `${day} ${month} ${hours}:${mins}`;
+                };
+                
+                return (
                 <tr key={lead.id} data-testid={`lead-row-${lead.id}`}>
                   <td>
                     <input type="checkbox" />
                     <span className="lead-name">{lead.lead_name}</span>
                   </td>
                   <td className="partner-name">{lead.partner_name}</td>
+                  <td className="lead-date">{formatLeadDate(lead.created_at)}</td>
                   <td className="follow-up">
                     {lead.next_follow_up_date} {lead.next_follow_up_time}
                   </td>
-                  <td>{lead.type}</td>
                   <td>
                     <span className={`priority-badge ${getPriorityColor(lead.priority)}`}>
                       {lead.priority}
