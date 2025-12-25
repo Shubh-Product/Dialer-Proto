@@ -210,7 +210,6 @@ const MyDemosPopup = ({ onDialClick }) => {
             <div className="demos-col time-col">Time Slot</div>
             <div className="demos-col action-col">Action</div>
             <div className="demos-col status-col">Status</div>
-            <div className="demos-col close-col">X</div>
           </div>
 
           {/* Table Body */}
