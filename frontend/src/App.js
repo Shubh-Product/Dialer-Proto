@@ -2,13 +2,6 @@ import { useState, useEffect } from "react";
 import "@/App.css";
 import axios from "axios";
 import { Phone, Mail, Clock, ChevronUp, ChevronDown, Search, Filter, Plus, PhoneCall, PhoneOff, X } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
