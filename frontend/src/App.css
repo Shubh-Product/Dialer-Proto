@@ -595,6 +595,22 @@ body {
   opacity: 0.9;
 }
 
+.btn-cancel {
+  padding: 12px 24px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  color: #64748b;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
 .btn-call-end {
   display: flex;
   align-items: center;
