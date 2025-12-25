@@ -244,8 +244,8 @@ const LeadManagement = () => {
         )}
       </div>
 
-      {/* Dialing Modal */}
-      {isDialogOpen && dialingLead && (
+      {/* Dialing Modal - using createPortal to render at body level */}
+      {isDialogOpen && dialingLead && createPortal(
         <div className="modal-overlay" onClick={closeDialer} data-testid="modal-overlay">
           <div className="modal-content dialing-dialog" onClick={(e) => e.stopPropagation()} data-testid="dialing-dialog">
             <div className="modal-header">
@@ -333,7 +333,8 @@ const LeadManagement = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
