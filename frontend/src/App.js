@@ -228,17 +228,7 @@ const MyDemosPopup = ({ onDialClick }) => {
                     <div className="demo-action-text">
                       <span className="demo-title">Demo At {demo.demo_time}</span>
                       <span className="demo-client">With {demo.client_name} {demo.company_name}</span>
-                      <span className="demo-mobile">
-                        Mob: {demo.mobile} 
-                        <button 
-                          type="button"
-                          className="demo-dial-btn"
-                          onClick={() => onDialClick(demo)}
-                          data-testid={`demo-dial-${demo.id}`}
-                        >
-                          [Dial]
-                        </button>
-                      </span>
+                      <span className="demo-mobile">Mob: {demo.mobile}</span>
                     </div>
                   </div>
                   <div className="demos-col status-col">
