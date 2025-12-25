@@ -115,6 +115,18 @@ const LeadManagement = () => {
         <div className="header-left">
           <div className="logo">B</div>
           <h1>Lead Management</h1>
+          <button 
+            type="button"
+            style={{marginLeft: '20px', padding: '8px 16px', background: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer'}}
+            onClick={() => {
+              console.log("TEST BUTTON CLICKED");
+              setIsDialogOpen(true);
+              setDialingLead({id: 'test', lead_name: 'Test', partner_name: 'Test Partner', mobile: '1234567890', calls_natc: 0, calls_c: 0});
+            }}
+            data-testid="test-call-btn"
+          >
+            Test Call Dialog
+          </button>
         </div>
         <div className="header-center">
           <div className="search-box">
