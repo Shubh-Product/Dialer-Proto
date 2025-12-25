@@ -502,7 +502,8 @@ const LeadManagement = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         )}
