@@ -815,6 +815,7 @@ body {
 .demos-table-body {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 280px;
 }
 
