@@ -469,15 +469,6 @@ const LeadManagement = () => {
                   <td className="actions">
                     <button 
                       type="button"
-                      className="action-btn whatsapp-btn" 
-                      title="WhatsApp"
-                      onClick={() => window.open(`https://wa.me/${lead.mobile.replace(/\D/g, '')}`, '_blank')}
-                      data-testid={`whatsapp-btn-${lead.id}`}
-                    >
-                      <MessageCircle size={16} />
-                    </button>
-                    <button 
-                      type="button"
                       className="action-btn call-btn" 
                       title="Call"
                       onClick={() => openDialer(lead)}
@@ -485,8 +476,17 @@ const LeadManagement = () => {
                     >
                       <Phone size={16} />
                     </button>
-                    <button type="button" className="action-btn" title="Schedule">
-                      <Clock size={16} />
+                    <button 
+                      type="button"
+                      className="action-btn whatsapp-btn" 
+                      title="WhatsApp"
+                      onClick={() => window.open(`https://wa.me/${lead.mobile.replace(/\D/g, '')}`, '_blank')}
+                      data-testid={`whatsapp-btn-${lead.id}`}
+                    >
+                      <MessageCircle size={16} />
+                    </button>
+                    <button type="button" className="action-btn history-btn" title="History">
+                      <History size={16} />
                     </button>
                   </td>
                 </tr>
