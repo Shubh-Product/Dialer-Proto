@@ -782,7 +782,7 @@ body {
 /* Table Header */
 .demos-table-header {
   display: grid;
-  grid-template-columns: 90px 1fr 80px;
+  grid-template-columns: 70px 1fr 90px;
   background: linear-gradient(135deg, #1e3a8a, #2563eb);
   color: white;
   font-size: 12px;
