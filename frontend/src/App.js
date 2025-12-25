@@ -233,7 +233,11 @@ const LeadManagement = () => {
                     <button 
                       className="action-btn call-btn" 
                       title="Call"
-                      onClick={() => handleCallClick(lead)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleCallClick(lead);
+                      }}
                       data-testid={`call-btn-${lead.id}`}
                     >
                       <Phone size={16} />
