@@ -337,10 +337,11 @@ async def seed_demos():
     
     sample_demos = [
         {"time_slot": "10:00 - 10:30", "demo_time": "10:15 AM", "client_name": "Mr. Raj", "company_name": "ABC Enterprises", "mobile": "9560987665", "status": "Pending", "date_type": "Today"},
-        {"time_slot": "10:00 - 10:30", "demo_time": "10:15 AM", "client_name": "Mr. Raj", "company_name": "ABC Enterprises", "mobile": "9560987665", "status": "Pending", "date_type": "Today"},
-        {"time_slot": "11:00 - 11:30", "demo_time": "11:15 AM", "client_name": "Ms. Priya", "company_name": "XYZ Solutions", "mobile": "8765432109", "status": "Pending", "date_type": "Today"},
+        {"time_slot": "11:00 - 11:30", "demo_time": "11:15 AM", "client_name": "Ms. Priya", "company_name": "XYZ Solutions", "mobile": "8765432109", "status": "Done", "date_type": "Today"},
         {"time_slot": "14:00 - 14:30", "demo_time": "2:15 PM", "client_name": "Mr. Sharma", "company_name": "Tech Corp", "mobile": "7654321098", "status": "Pending", "date_type": "Today"},
-        {"time_slot": "09:00 - 09:30", "demo_time": "9:15 AM", "client_name": "Mr. Kumar", "company_name": "Digital Works", "mobile": "6543210987", "status": "Pending", "date_type": "Tomorrow"},
+        {"time_slot": "15:30 - 16:00", "demo_time": "3:45 PM", "client_name": "Mr. Verma", "company_name": "Cloud Nine", "mobile": "9988776655", "status": "Done", "date_type": "Today"},
+        {"time_slot": "09:00 - 09:30", "demo_time": "9:15 AM", "client_name": "Mr. Kumar", "company_name": "Digital Works", "mobile": "6543210987", "status": "Done", "date_type": "Tomorrow"},
+        {"time_slot": "11:00 - 11:30", "demo_time": "11:15 AM", "client_name": "Ms. Mehta", "company_name": "InfoTech", "mobile": "8877665544", "status": "Pending", "date_type": "Tomorrow"},
         {"time_slot": "15:00 - 15:30", "demo_time": "3:15 PM", "client_name": "Ms. Gupta", "company_name": "Innovation Labs", "mobile": "5432109876", "status": "Pending", "date_type": "Tomorrow"},
     ]
     
