@@ -53,7 +53,6 @@ const LeadManagement = () => {
 
   const handleCallClick = (lead) => {
     console.log("handleCallClick called with lead:", lead.id, lead.mobile);
-    alert("Opening dialog for " + lead.mobile);
     setDialingLead(lead);
     setIsDialogOpen(true);
     setCallInProgress(false);
