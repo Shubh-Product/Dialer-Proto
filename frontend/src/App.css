@@ -906,22 +906,24 @@ body {
 }
 
 .demo-call-icon {
-  background: #ecfdf5;
-  border: 1px solid #d1fae5;
-  color: #059669;
-  width: 24px;
-  height: 24px;
+  background: linear-gradient(135deg, #059669, #10b981);
+  border: none;
+  color: white;
+  padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
   transition: all 0.2s;
 }
 
 .demo-call-icon:hover {
-  background: #d1fae5;
-  color: #047857;
+  background: linear-gradient(135deg, #047857, #059669);
+  transform: translateY(-1px);
 }
 
 .demo-delete-btn {
