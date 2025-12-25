@@ -401,6 +401,17 @@ body {
   color: #128c7e;
 }
 
+.action-btn.history-btn {
+  color: #6366f1;
+  border-color: #e0e7ff;
+  background: #eef2ff;
+}
+
+.action-btn.history-btn:hover {
+  background: #e0e7ff;
+  color: #4f46e5;
+}
+
 /* Dialing Dialog */
 .modal-overlay {
   position: fixed;
