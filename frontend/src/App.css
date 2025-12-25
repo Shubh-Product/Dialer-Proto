@@ -693,6 +693,10 @@ body {
   animation: slideUp 0.3s ease;
 }
 
+.my-demos-popup * {
+  box-sizing: border-box;
+}
+
 @keyframes slideUp {
   from {
     opacity: 0;
