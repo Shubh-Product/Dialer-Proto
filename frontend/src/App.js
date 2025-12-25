@@ -51,12 +51,12 @@ const LeadManagement = () => {
     return 0;
   });
 
-  const handleCallClick = (lead) => {
+  const handleCallClick = useCallback((lead) => {
     console.log("handleCallClick called with lead:", lead.id, lead.mobile);
     setDialingLead(lead);
     setIsDialogOpen(true);
     setCallInProgress(false);
-  };
+  }, []);
 
   const handleStartCall = async () => {
     setCallInProgress(true);
