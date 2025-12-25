@@ -151,6 +151,38 @@ body {
   font-weight: 500;
 }
 
+.tab.tab-due {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fcd34d;
+}
+
+.tab.tab-due:hover {
+  background: #fde68a;
+}
+
+.tab.tab-due.active {
+  background: #f59e0b;
+  color: white;
+  border-color: #f59e0b;
+}
+
+.tab.tab-overdue {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.tab.tab-overdue:hover {
+  background: #fecaca;
+}
+
+.tab.tab-overdue.active {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
 .tabs-right {
   display: flex;
   gap: 12px;
