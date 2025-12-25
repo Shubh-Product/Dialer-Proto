@@ -247,6 +247,11 @@ const LeadManagement = () => {
         )}
       </div>
 
+      {/* Debug state info */}
+      <div style={{position: 'fixed', bottom: 10, left: 10, background: '#fff', padding: '5px', fontSize: '12px', zIndex: 9999, border: '1px solid #ccc'}}>
+        Dialog: {isDialogOpen ? 'Open' : 'Closed'} | Lead: {dialingLead ? dialingLead.mobile : 'None'}
+      </div>
+
       {/* Dialing Dialog */}
       {isDialogOpen && dialingLead && (
         <div className="modal-overlay" onClick={() => setIsDialogOpen(false)} data-testid="modal-overlay">
