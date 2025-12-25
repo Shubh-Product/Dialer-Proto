@@ -796,6 +796,18 @@ body {
   accent-color: #1e3a8a;
 }
 
+.demos-tab-item.pending-filter {
+  margin-left: auto;
+  background: #fef3c7;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.demos-tab-item.pending-filter span {
+  color: #d97706;
+  font-weight: 500;
+}
+
 /* Table Header */
 .demos-table-header {
   display: grid;
