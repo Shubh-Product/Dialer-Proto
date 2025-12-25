@@ -816,7 +816,7 @@ body {
 
 .demos-row {
   display: grid;
-  grid-template-columns: 100px 1fr 90px 40px;
+  grid-template-columns: 90px 1fr 80px;
   border-bottom: 1px solid #f1f5f9;
   transition: background 0.15s;
 }
