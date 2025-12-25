@@ -43,17 +43,6 @@ const DialingModal = ({ isOpen, lead, callInProgress, onClose, onStartCall, onEn
             </div>
           )}
           
-          <div className="call-stats">
-            <div className="stat">
-              <PhoneOff size={16} className="stat-icon natc" />
-              <span>NATC: {lead.calls_natc || 0}</span>
-            </div>
-            <div className="stat">
-              <PhoneCall size={16} className="stat-icon connected" />
-              <span>Connected: {lead.calls_c || 0}</span>
-            </div>
-          </div>
-          
           <div className="dialog-actions">
             {!callInProgress ? (
               <>
