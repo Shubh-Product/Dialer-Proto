@@ -107,7 +107,7 @@ const MyDemosPopup = ({ onDialClick }) => {
   const [demos, setDemos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('Today');
-  const [pendingOnly, setPendingOnly] = useState(false);
+  const [pendingOnly, setPendingOnly] = useState(true); // Default selected
 
   useEffect(() => {
     fetchDemos();
