@@ -473,8 +473,14 @@ const LeadManagement = () => {
                   </td>
                   <td className="mobile">{lead.mobile}</td>
                   <td className="actions">
-                    <button type="button" className="action-btn" title="Email">
-                      <Mail size={16} />
+                    <button 
+                      type="button"
+                      className="action-btn whatsapp-btn" 
+                      title="WhatsApp"
+                      onClick={() => window.open(`https://wa.me/${lead.mobile.replace(/\D/g, '')}`, '_blank')}
+                      data-testid={`whatsapp-btn-${lead.id}`}
+                    >
+                      <MessageCircle size={16} />
                     </button>
                     <button 
                       type="button"
