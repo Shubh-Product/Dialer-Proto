@@ -244,16 +244,20 @@ const MyDemosPopup = ({ onDialClick }) => {
                   <div className="demos-col status-col">
                     <div className="demo-status-wrapper">
                       <span className={`demo-status ${demo.status.toLowerCase()}`}>
-                        {demo.status}
+                        {demo.status === 'Completed' ? 'Call Done' : demo.status}
                       </span>
-                      <button 
-                        type="button"
-                        className="demo-call-icon"
-                        onClick={() => onDialClick(demo)}
-                        title="Call"
-                      >
-                        <Phone size={14} />
-                      </button>
+                      {demo.status === 'Pending' && (
+                        <button 
+                          type="button"
+                          className="demo-call-icon"
+                          onClick={() => onDialClick(demo)}
+                          title="Dial"
+                          data-testid={`demo-dial-btn-${demo.id}`}
+                        >
+                          <Phone size={12} />
+                          Dial
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
