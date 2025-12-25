@@ -205,6 +205,15 @@ const MyDemosPopup = ({ onDialClick }) => {
               />
               <span>Tomorrow</span>
             </label>
+            <label className="demos-tab-item pending-filter">
+              <input 
+                type="checkbox" 
+                checked={pendingOnly}
+                onChange={() => setPendingOnly(!pendingOnly)}
+                data-testid="pending-only-checkbox"
+              />
+              <span>Pending Only</span>
+            </label>
           </div>
 
           {/* Table Body */}
