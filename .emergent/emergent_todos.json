@@ -1,22 +1,22 @@
 [
   {
     "content": "Create backend API for leads with call tracking fields",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Build Lead Management table with Calls NATC, Calls -C columns",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add Call icon to Actions column",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create dialing number popup component",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test the complete implementation",
-    "status": "pending"
+    "status": "completed"
   }
 ]
