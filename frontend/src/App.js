@@ -427,12 +427,6 @@ const LeadManagement = () => {
                 <th onClick={() => handleSort('next_follow_up_date')} className="sortable">
                   Next Follow Up <SortIcon column="next_follow_up_date" />
                 </th>
-                <th onClick={() => handleSort('calls_natc')} className="sortable calls-col" data-testid="calls-natc-header">
-                  Calls NATC <SortIcon column="calls_natc" />
-                </th>
-                <th onClick={() => handleSort('calls_c')} className="sortable calls-col" data-testid="calls-c-header">
-                  Calls -C <SortIcon column="calls_c" />
-                </th>
                 <th onClick={() => handleSort('type')} className="sortable">
                   Type <SortIcon column="type" />
                 </th>
