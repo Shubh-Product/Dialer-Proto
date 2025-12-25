@@ -248,15 +248,16 @@ const LeadManagement = () => {
       </div>
 
       {/* Dialing Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="dialing-dialog" data-testid="dialing-dialog">
-          <DialogHeader>
-            <DialogTitle>
-              {callInProgress ? 'Calling...' : 'Dial Number'}
-            </DialogTitle>
-          </DialogHeader>
-          
-          {dialingLead && (
+      {isDialogOpen && dialingLead && (
+        <div className="modal-overlay" onClick={() => setIsDialogOpen(false)} data-testid="modal-overlay">
+          <div className="modal-content dialing-dialog" onClick={(e) => e.stopPropagation()} data-testid="dialing-dialog">
+            <div className="modal-header">
+              <h2>{callInProgress ? 'Calling...' : 'Dial Number'}</h2>
+              <button className="close-btn" onClick={() => setIsDialogOpen(false)}>
+                <X size={20} />
+              </button>
+            </div>
+            
             <div className="dialing-content">
               <div className="contact-info">
                 <div className="contact-avatar">
@@ -273,14 +274,14 @@ const LeadManagement = () => {
                 <span>{dialingLead.mobile}</span>
               </div>
               
-              {callInProgress ? (
+              {callInProgress && (
                 <div className="calling-animation">
                   <div className="pulse-ring"></div>
                   <div className="pulse-ring delay-1"></div>
                   <div className="pulse-ring delay-2"></div>
                   <Phone size={40} className="calling-icon" />
                 </div>
-              ) : null}
+              )}
               
               <div className="call-stats">
                 <div className="stat">
@@ -296,43 +297,43 @@ const LeadManagement = () => {
               <div className="dialog-actions">
                 {!callInProgress ? (
                   <>
-                    <Button 
+                    <button 
                       className="btn-call-start"
                       onClick={handleStartCall}
                       data-testid="start-call-btn"
                     >
                       <Phone size={18} /> Start Call
-                    </Button>
-                    <Button 
-                      variant="outline"
+                    </button>
+                    <button 
+                      className="btn-cancel"
                       onClick={() => setIsDialogOpen(false)}
                     >
                       Cancel
-                    </Button>
+                    </button>
                   </>
                 ) : (
                   <>
-                    <Button 
+                    <button 
                       className="btn-call-end natc"
                       onClick={() => handleEndCall('natc')}
                       data-testid="end-natc-btn"
                     >
                       <PhoneOff size={18} /> Not Answered
-                    </Button>
-                    <Button 
+                    </button>
+                    <button 
                       className="btn-call-end connected"
                       onClick={() => handleEndCall('c')}
                       data-testid="end-connected-btn"
                     >
                       <PhoneCall size={18} /> Connected
-                    </Button>
+                    </button>
                   </>
                 )}
               </div>
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
