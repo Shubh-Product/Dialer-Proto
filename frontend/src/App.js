@@ -256,16 +256,6 @@ const MyDemosPopup = ({ onDialClick }) => {
                       </button>
                     </div>
                   </div>
-                  <div className="demos-col close-col">
-                    <button 
-                      type="button"
-                      className="demo-delete-btn"
-                      onClick={() => handleDeleteDemo(demo.id)}
-                      title="Remove"
-                    >
-                      <X size={14} />
-                    </button>
-                  </div>
                 </div>
               ))
             )}
