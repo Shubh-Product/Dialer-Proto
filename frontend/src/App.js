@@ -395,6 +395,8 @@ const LeadManagement = () => {
           <button className="tab">Upcoming Follow Up</button>
           <button className="tab">Pending Demo</button>
           <button className="tab">Upcoming Demo</button>
+          <button className="tab tab-due" data-testid="due-filter">Due</button>
+          <button className="tab tab-overdue" data-testid="overdue-filter">Overdue</button>
         </div>
         <div className="tabs-right">
           <button className="btn-secondary">Bulk Assign</button>
