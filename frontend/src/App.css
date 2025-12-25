@@ -387,6 +387,8 @@ body {
 /* Dialing Dialog */
 .dialing-dialog {
   max-width: 400px;
+  background: white;
+  border-radius: 12px;
 }
 
 .dialing-content {
