@@ -328,6 +328,31 @@ async def seed_data():
     return {"message": f"Seeded {len(sample_leads)} leads"}
 
 
+# Seed demo data
+@api_router.post("/seed-demos")
+async def seed_demos():
+    count = await db.demos.count_documents({})
+    if count > 0:
+        return {"message": "Demo data already exists", "count": count}
+    
+    sample_demos = [
+        {"time_slot": "10:00 - 10:30", "demo_time": "10:15 AM", "client_name": "Mr. Raj", "company_name": "ABC Enterprises", "mobile": "9560987665", "status": "Pending", "date_type": "Today"},
+        {"time_slot": "10:00 - 10:30", "demo_time": "10:15 AM", "client_name": "Mr. Raj", "company_name": "ABC Enterprises", "mobile": "9560987665", "status": "Pending", "date_type": "Today"},
+        {"time_slot": "11:00 - 11:30", "demo_time": "11:15 AM", "client_name": "Ms. Priya", "company_name": "XYZ Solutions", "mobile": "8765432109", "status": "Pending", "date_type": "Today"},
+        {"time_slot": "14:00 - 14:30", "demo_time": "2:15 PM", "client_name": "Mr. Sharma", "company_name": "Tech Corp", "mobile": "7654321098", "status": "Pending", "date_type": "Today"},
+        {"time_slot": "09:00 - 09:30", "demo_time": "9:15 AM", "client_name": "Mr. Kumar", "company_name": "Digital Works", "mobile": "6543210987", "status": "Pending", "date_type": "Tomorrow"},
+        {"time_slot": "15:00 - 15:30", "demo_time": "3:15 PM", "client_name": "Ms. Gupta", "company_name": "Innovation Labs", "mobile": "5432109876", "status": "Pending", "date_type": "Tomorrow"},
+    ]
+    
+    for demo_data in sample_demos:
+        demo = Demo(**demo_data)
+        doc = demo.model_dump()
+        doc['created_at'] = doc['created_at'].isoformat()
+        await db.demos.insert_one(doc)
+    
+    return {"message": f"Seeded {len(sample_demos)} demos"}
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
