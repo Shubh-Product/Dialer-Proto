@@ -145,7 +145,11 @@ const MyDemosPopup = ({ onDialClick }) => {
     }
   };
 
-  const filteredDemos = demos.filter(d => d.date_type === activeTab);
+  const filteredDemos = demos.filter(d => {
+    const matchesTab = d.date_type === activeTab;
+    const matchesPending = pendingOnly ? d.status === 'Pending' : true;
+    return matchesTab && matchesPending;
+  });
 
   return createPortal(
     <div className="my-demos-container" data-testid="my-demos-container">
