@@ -227,10 +227,11 @@ const LeadManagement = () => {
                   </td>
                   <td className="mobile">{lead.mobile}</td>
                   <td className="actions">
-                    <button className="action-btn" title="Email">
+                    <button type="button" className="action-btn" title="Email">
                       <Mail size={16} />
                     </button>
                     <button 
+                      type="button"
                       className="action-btn call-btn" 
                       title="Call"
                       onClick={(e) => {
@@ -242,7 +243,7 @@ const LeadManagement = () => {
                     >
                       <Phone size={16} />
                     </button>
-                    <button className="action-btn" title="Schedule">
+                    <button type="button" className="action-btn" title="Schedule">
                       <Clock size={16} />
                     </button>
                   </td>
