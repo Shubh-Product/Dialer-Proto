@@ -2,10 +2,281 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import "@/App.css";
 import axios from "axios";
-import { Phone, Mail, Clock, ChevronUp, ChevronDown, Search, Filter, Plus, PhoneCall, PhoneOff, X } from "lucide-react";
+import { Phone, Mail, Clock, ChevronUp, ChevronDown, Search, Filter, Plus, PhoneCall, PhoneOff, X, Minus, Maximize2, Calendar } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Shared Dialing Modal Component
+const DialingModal = ({ isOpen, lead, callInProgress, onClose, onStartCall, onEndCall }) => {
+  if (!isOpen || !lead) return null;
+
+  return createPortal(
+    <div className="modal-overlay" onClick={onClose} data-testid="modal-overlay">
+      <div className="modal-content dialing-dialog" onClick={(e) => e.stopPropagation()} data-testid="dialing-dialog">
+        <div className="modal-header">
+          <h2>{callInProgress ? 'Calling...' : 'Dial Number'}</h2>
+          <button type="button" className="close-btn" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        
+        <div className="dialing-content">
+          <div className="contact-info">
+            <div className="contact-avatar">
+              {(lead.lead_name === 'N/A' || !lead.lead_name) ? '?' : lead.lead_name.charAt(0)}
+            </div>
+            <div className="contact-details">
+              <h3>{lead.client_name || lead.lead_name || 'N/A'}</h3>
+              <p className="partner">{lead.company_name || lead.partner_name}</p>
+            </div>
+          </div>
+          
+          <div className="phone-number" data-testid="dialing-number">
+            <Phone size={24} />
+            <span>{lead.mobile}</span>
+          </div>
+          
+          {callInProgress && (
+            <div className="calling-animation">
+              <div className="pulse-ring"></div>
+              <div className="pulse-ring delay-1"></div>
+              <div className="pulse-ring delay-2"></div>
+              <Phone size={40} className="calling-icon" />
+            </div>
+          )}
+          
+          <div className="call-stats">
+            <div className="stat">
+              <PhoneOff size={16} className="stat-icon natc" />
+              <span>NATC: {lead.calls_natc || 0}</span>
+            </div>
+            <div className="stat">
+              <PhoneCall size={16} className="stat-icon connected" />
+              <span>Connected: {lead.calls_c || 0}</span>
+            </div>
+          </div>
+          
+          <div className="dialog-actions">
+            {!callInProgress ? (
+              <>
+                <button 
+                  type="button"
+                  className="btn-call-start"
+                  onClick={onStartCall}
+                  data-testid="start-call-btn"
+                >
+                  <Phone size={18} /> Start Call
+                </button>
+                <button 
+                  type="button"
+                  className="btn-cancel"
+                  onClick={onClose}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <button 
+                  type="button"
+                  className="btn-call-end natc"
+                  onClick={() => onEndCall('natc')}
+                  data-testid="end-natc-btn"
+                >
+                  <PhoneOff size={18} /> Not Answered
+                </button>
+                <button 
+                  type="button"
+                  className="btn-call-end connected"
+                  onClick={() => onEndCall('c')}
+                  data-testid="end-connected-btn"
+                >
+                  <PhoneCall size={18} /> Connected
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
+// My Demos Floating Popup Component
+const MyDemosPopup = ({ onDialClick }) => {
+  const [isExpanded, setIsExpanded] = useState(true); // Open by default
+  const [demos, setDemos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('Today');
+
+  useEffect(() => {
+    fetchDemos();
+  }, []);
+
+  const fetchDemos = async () => {
+    try {
+      setLoading(true);
+      await axios.post(`${API}/seed-demos`);
+      const response = await axios.get(`${API}/demos`);
+      setDemos(response.data);
+    } catch (e) {
+      console.error("Error fetching demos:", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteDemo = async (demoId) => {
+    try {
+      await axios.delete(`${API}/demos/${demoId}`);
+      setDemos(demos.filter(d => d.id !== demoId));
+    } catch (e) {
+      console.error("Error deleting demo:", e);
+    }
+  };
+
+  const handleStatusChange = async (demo) => {
+    try {
+      const newStatus = demo.status === 'Pending' ? 'Completed' : 'Pending';
+      await axios.put(`${API}/demos/${demo.id}`, { status: newStatus });
+      setDemos(demos.map(d => d.id === demo.id ? { ...d, status: newStatus } : d));
+    } catch (e) {
+      console.error("Error updating demo status:", e);
+    }
+  };
+
+  const filteredDemos = demos.filter(d => d.date_type === activeTab);
+
+  return createPortal(
+    <div className="my-demos-container" data-testid="my-demos-container">
+      {/* Minimized Button */}
+      {!isExpanded && (
+        <button 
+          className="my-demos-btn"
+          onClick={() => setIsExpanded(true)}
+          data-testid="my-demos-expand-btn"
+        >
+          <Calendar size={20} />
+          <span>My Demos</span>
+          <span className="demo-count">{demos.filter(d => d.status === 'Pending').length}</span>
+        </button>
+      )}
+
+      {/* Expanded Popup */}
+      {isExpanded && (
+        <div className="my-demos-popup" data-testid="my-demos-popup">
+          <div className="demos-popup-header">
+            <div className="demos-header-left">
+              <Calendar size={18} />
+              <h3>My Demos</h3>
+              <span className="demo-badge">{demos.filter(d => d.status === 'Pending').length} Pending</span>
+            </div>
+            <div className="demos-header-actions">
+              <button 
+                type="button" 
+                className="demos-minimize-btn"
+                onClick={() => setIsExpanded(false)}
+                title="Minimize"
+              >
+                <Minus size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div className="demos-tabs">
+            <label className="demos-tab-item">
+              <input 
+                type="checkbox" 
+                checked={activeTab === 'Today'}
+                onChange={() => setActiveTab('Today')}
+              />
+              <span>Today</span>
+            </label>
+            <label className="demos-tab-item">
+              <input 
+                type="checkbox" 
+                checked={activeTab === 'Tomorrow'}
+                onChange={() => setActiveTab('Tomorrow')}
+              />
+              <span>Tomorrow</span>
+            </label>
+          </div>
+
+          {/* Table Header */}
+          <div className="demos-table-header">
+            <div className="demos-col time-col">Time Slot</div>
+            <div className="demos-col action-col">Action</div>
+            <div className="demos-col status-col">Status</div>
+            <div className="demos-col close-col">X</div>
+          </div>
+
+          {/* Table Body */}
+          <div className="demos-table-body">
+            {loading ? (
+              <div className="demos-loading">Loading demos...</div>
+            ) : filteredDemos.length === 0 ? (
+              <div className="demos-empty">No demos scheduled for {activeTab}</div>
+            ) : (
+              filteredDemos.map((demo) => (
+                <div key={demo.id} className="demos-row" data-testid={`demo-row-${demo.id}`}>
+                  <div className="demos-col time-col">
+                    {demo.time_slot}
+                  </div>
+                  <div className="demos-col action-col">
+                    <div className="demo-action-text">
+                      <span className="demo-title">Demo At {demo.demo_time}</span>
+                      <span className="demo-client">With {demo.client_name} {demo.company_name}</span>
+                      <span className="demo-mobile">
+                        Mob: {demo.mobile} 
+                        <button 
+                          type="button"
+                          className="demo-dial-btn"
+                          onClick={() => onDialClick(demo)}
+                          data-testid={`demo-dial-${demo.id}`}
+                        >
+                          [Dial]
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="demos-col status-col">
+                    <div className="demo-status-wrapper">
+                      <span className={`demo-status ${demo.status.toLowerCase()}`}>
+                        {demo.status}
+                      </span>
+                      <button 
+                        type="button"
+                        className="demo-call-icon"
+                        onClick={() => onDialClick(demo)}
+                        title="Call"
+                      >
+                        <Phone size={14} />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="demos-col close-col">
+                    <button 
+                      type="button"
+                      className="demo-delete-btn"
+                      onClick={() => handleDeleteDemo(demo.id)}
+                      title="Remove"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>,
+    document.body
+  );
+};
 
 const LeadManagement = () => {
   const [leads, setLeads] = useState([]);
@@ -67,17 +338,20 @@ const LeadManagement = () => {
   const handleEndCall = async (callType) => {
     if (!dialingLead) return;
     
-    try {
-      await axios.post(`${API}/calls`, {
-        lead_id: dialingLead.id,
-        call_type: callType,
-        duration: 0,
-        notes: ""
-      });
-      const response = await axios.get(`${API}/leads`);
-      setLeads(response.data);
-    } catch (e) {
-      console.error("Error logging call:", e);
+    // Only log call if it's a lead (has lead_id format)
+    if (dialingLead.id && !dialingLead.time_slot) {
+      try {
+        await axios.post(`${API}/calls`, {
+          lead_id: dialingLead.id,
+          call_type: callType,
+          duration: 0,
+          notes: ""
+        });
+        const response = await axios.get(`${API}/leads`);
+        setLeads(response.data);
+      } catch (e) {
+        console.error("Error logging call:", e);
+      }
     }
     
     closeDialer();
@@ -244,98 +518,18 @@ const LeadManagement = () => {
         )}
       </div>
 
-      {/* Dialing Modal - using createPortal to render at body level */}
-      {isDialogOpen && dialingLead && createPortal(
-        <div className="modal-overlay" onClick={closeDialer} data-testid="modal-overlay">
-          <div className="modal-content dialing-dialog" onClick={(e) => e.stopPropagation()} data-testid="dialing-dialog">
-            <div className="modal-header">
-              <h2>{callInProgress ? 'Calling...' : 'Dial Number'}</h2>
-              <button type="button" className="close-btn" onClick={closeDialer}>
-                <X size={20} />
-              </button>
-            </div>
-            
-            <div className="dialing-content">
-              <div className="contact-info">
-                <div className="contact-avatar">
-                  {dialingLead.lead_name === 'N/A' ? '?' : dialingLead.lead_name.charAt(0)}
-                </div>
-                <div className="contact-details">
-                  <h3>{dialingLead.lead_name}</h3>
-                  <p className="partner">{dialingLead.partner_name}</p>
-                </div>
-              </div>
-              
-              <div className="phone-number" data-testid="dialing-number">
-                <Phone size={24} />
-                <span>{dialingLead.mobile}</span>
-              </div>
-              
-              {callInProgress && (
-                <div className="calling-animation">
-                  <div className="pulse-ring"></div>
-                  <div className="pulse-ring delay-1"></div>
-                  <div className="pulse-ring delay-2"></div>
-                  <Phone size={40} className="calling-icon" />
-                </div>
-              )}
-              
-              <div className="call-stats">
-                <div className="stat">
-                  <PhoneOff size={16} className="stat-icon natc" />
-                  <span>NATC: {dialingLead.calls_natc}</span>
-                </div>
-                <div className="stat">
-                  <PhoneCall size={16} className="stat-icon connected" />
-                  <span>Connected: {dialingLead.calls_c}</span>
-                </div>
-              </div>
-              
-              <div className="dialog-actions">
-                {!callInProgress ? (
-                  <>
-                    <button 
-                      type="button"
-                      className="btn-call-start"
-                      onClick={handleStartCall}
-                      data-testid="start-call-btn"
-                    >
-                      <Phone size={18} /> Start Call
-                    </button>
-                    <button 
-                      type="button"
-                      className="btn-cancel"
-                      onClick={closeDialer}
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button 
-                      type="button"
-                      className="btn-call-end natc"
-                      onClick={() => handleEndCall('natc')}
-                      data-testid="end-natc-btn"
-                    >
-                      <PhoneOff size={18} /> Not Answered
-                    </button>
-                    <button 
-                      type="button"
-                      className="btn-call-end connected"
-                      onClick={() => handleEndCall('c')}
-                      data-testid="end-connected-btn"
-                    >
-                      <PhoneCall size={18} /> Connected
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>,
-        document.body
-      )}
+      {/* Shared Dialing Modal */}
+      <DialingModal
+        isOpen={isDialogOpen}
+        lead={dialingLead}
+        callInProgress={callInProgress}
+        onClose={closeDialer}
+        onStartCall={handleStartCall}
+        onEndCall={handleEndCall}
+      />
+
+      {/* My Demos Floating Popup */}
+      <MyDemosPopup onDialClick={openDialer} />
     </div>
   );
 };
