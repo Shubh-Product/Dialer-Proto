@@ -320,6 +320,12 @@ body {
   white-space: nowrap;
 }
 
+.lead-date {
+  white-space: nowrap;
+  color: #475569;
+  font-size: 13px;
+}
+
 .priority-badge {
   display: inline-block;
   padding: 4px 12px;
