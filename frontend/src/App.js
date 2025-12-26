@@ -125,7 +125,7 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
         <div className="edit-lead-section">
           <h3 className="section-title">Follow Up Update</h3>
           
-          <div className="form-group">
+          <div className="form-group" style={{marginBottom: '16px'}}>
             <label>Update Type</label>
             <div className="radio-group">
               <label className="radio-item">
@@ -202,9 +202,6 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
                 <option value="Call Back">Call Back</option>
               </select>
             </div>
-          </div>
-
-          <div className="form-grid form-grid-2">
             <div className="form-group">
               <label>Next Follow Up Type <span className="required">*</span></label>
               <select 
@@ -231,13 +228,13 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
             </div>
           </div>
 
-          <div className="form-group full-width">
+          <div className="form-group full-width" style={{marginTop: '16px'}}>
             <label>Follow Up Remarks</label>
             <textarea 
               value={formData.followUpRemarks}
               onChange={(e) => handleChange('followUpRemarks', e.target.value)}
               placeholder="Enter Remarks"
-              rows={4}
+              rows={3}
             />
           </div>
         </div>
