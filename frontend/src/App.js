@@ -76,12 +76,16 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
           <div className="form-grid">
             <div className="form-group">
               <label>Mobile <span className="required">*</span></label>
-              <input 
-                type="text" 
-                value={formData.mobile}
-                onChange={(e) => handleChange('mobile', e.target.value)}
-                placeholder="9814751033"
-              />
+              <div className="mobile-input-wrapper">
+                <input 
+                  type="text" 
+                  value={formData.mobile}
+                  readOnly
+                  className="readonly-input"
+                  placeholder="9814751033"
+                />
+                <Phone size={18} className="mobile-icon" />
+              </div>
             </div>
             <div className="form-group">
               <label>Contact Person Name</label>
