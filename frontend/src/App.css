@@ -807,7 +807,8 @@ body {
   cursor: pointer;
 }
 
-.demos-tab-item input[type="checkbox"] {
+.demos-tab-item input[type="checkbox"],
+.demos-tab-item input[type="radio"] {
   width: 16px;
   height: 16px;
   accent-color: #1e3a8a;
