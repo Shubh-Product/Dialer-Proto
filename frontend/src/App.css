@@ -14,6 +14,250 @@ body {
   min-height: 100vh;
 }
 
+/* ==========================================
+   Edit Lead Modal Styles
+   ========================================== */
+
+.edit-lead-modal {
+  background: #f8fafc;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.edit-lead-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 12px 12px 0 0;
+}
+
+.edit-lead-header-left h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.edit-lead-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.edit-lead-meta .meta-item {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.edit-lead-meta .meta-item strong {
+  color: #1e293b;
+}
+
+.edit-lead-close {
+  background: #1e3a8a;
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.edit-lead-close:hover {
+  background: #1e40af;
+}
+
+.edit-lead-section {
+  padding: 20px 24px;
+  background: white;
+  margin: 16px;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.form-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group .required {
+  color: #dc2626;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #1e293b;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.date-input-wrapper {
+  position: relative;
+}
+
+.date-input-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.date-input-wrapper .date-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+}
+
+.view-more-link {
+  text-align: right;
+  margin-top: 12px;
+}
+
+.view-more-link a {
+  color: #3b82f6;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.view-more-link a:hover {
+  text-decoration: underline;
+}
+
+.radio-group {
+  display: flex;
+  gap: 24px;
+  margin-top: 4px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radio-item input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #1e3a8a;
+}
+
+.radio-item span {
+  font-size: 14px;
+  color: #374151;
+}
+
+.edit-lead-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 12px 12px;
+}
+
+.btn-view-history {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #3b82f6;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-view-history:hover {
+  background: #f8fafc;
+  border-color: #3b82f6;
+}
+
+.btn-save-details {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-save-details:hover {
+  opacity: 0.9;
+}
+
 /* Lead Management Container */
 .lead-management {
   min-height: 100vh;
