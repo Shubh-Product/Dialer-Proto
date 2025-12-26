@@ -19,10 +19,10 @@ body {
    ========================================== */
 
 .edit-lead-modal {
-  background: #f8fafc;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 800px;
+  background: white;
+  border-radius: 8px;
+  width: 95%;
+  max-width: 950px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -31,24 +31,29 @@ body {
 .edit-lead-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px 24px;
-  background: white;
+  align-items: center;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #e8f0fe, #f0f4f8);
   border-bottom: 1px solid #e5e7eb;
-  border-radius: 12px 12px 0 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.edit-lead-header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .edit-lead-header-left h2 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #1e293b;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .edit-lead-meta {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 24px;
 }
 
 .edit-lead-meta .meta-item {
@@ -58,14 +63,15 @@ body {
 
 .edit-lead-meta .meta-item strong {
   color: #1e293b;
+  font-weight: 600;
 }
 
 .edit-lead-close {
-  background: #1e3a8a;
+  background: #3b82f6;
   border: none;
   color: white;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -75,27 +81,33 @@ body {
 }
 
 .edit-lead-close:hover {
-  background: #1e40af;
+  background: #2563eb;
 }
 
 .edit-lead-section {
   padding: 20px 24px;
-  background: white;
-  margin: 16px;
-  border-radius: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.edit-lead-section:last-of-type {
+  border-bottom: none;
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #1e293b;
   margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #3b82f6;
+  display: inline-block;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 16px 20px;
+  margin-bottom: 12px;
 }
 
 .form-grid-2 {
@@ -127,10 +139,10 @@ body {
 .form-group textarea {
   padding: 10px 12px;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 14px;
   color: #1e293b;
-  background: white;
+  background: #fafbfc;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -139,7 +151,8 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  background: white;
 }
 
 .form-group input::placeholder,
@@ -149,11 +162,16 @@ body {
 
 .form-group select {
   cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 80px;
 }
 
 .date-input-wrapper {
@@ -176,13 +194,14 @@ body {
 
 .view-more-link {
   text-align: right;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .view-more-link a {
   color: #3b82f6;
   font-size: 13px;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .view-more-link a:hover {
@@ -191,7 +210,7 @@ body {
 
 .radio-group {
   display: flex;
-  gap: 24px;
+  gap: 32px;
   margin-top: 4px;
 }
 
@@ -205,7 +224,7 @@ body {
 .radio-item input[type="radio"] {
   width: 16px;
   height: 16px;
-  accent-color: #1e3a8a;
+  accent-color: #3b82f6;
 }
 
 .radio-item span {
@@ -215,11 +234,12 @@ body {
 
 .edit-lead-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 12px;
   padding: 16px 24px;
-  background: white;
+  background: #f8fafc;
   border-top: 1px solid #e5e7eb;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 8px 8px;
 }
 
 .btn-view-history {
@@ -228,8 +248,8 @@ body {
   gap: 8px;
   padding: 10px 20px;
   background: white;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1px solid #3b82f6;
+  border-radius: 4px;
   color: #3b82f6;
   font-size: 14px;
   font-weight: 500;
@@ -238,24 +258,23 @@ body {
 }
 
 .btn-view-history:hover {
-  background: #f8fafc;
-  border-color: #3b82f6;
+  background: #eff6ff;
 }
 
 .btn-save-details {
   padding: 10px 24px;
-  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-  border: none;
-  border-radius: 6px;
-  color: white;
+  background: #e5e7eb;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  color: #374151;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
 }
 
 .btn-save-details:hover {
-  opacity: 0.9;
+  background: #d1d5db;
 }
 
 /* Lead Management Container */
