@@ -10,6 +10,7 @@ const API = `${BACKEND_URL}/api`;
 // Webphone Dialer Popup Component
 const WebphoneDialer = ({ isOpen, phoneNumber, onClose, position }) => {
   const [dialedNumber, setDialedNumber] = useState('');
+  const [isDialling, setIsDialling] = useState(false);
 
   useEffect(() => {
     if (phoneNumber) {
@@ -17,10 +18,19 @@ const WebphoneDialer = ({ isOpen, phoneNumber, onClose, position }) => {
     }
   }, [phoneNumber]);
 
+  useEffect(() => {
+    // Reset dialling state when closed
+    if (!isOpen) {
+      setIsDialling(false);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleDigitPress = (digit) => {
-    setDialedNumber(prev => prev + digit);
+    if (!isDialling) {
+      setDialedNumber(prev => prev + digit);
+    }
   };
 
   const handleClear = () => {
@@ -28,8 +38,14 @@ const WebphoneDialer = ({ isOpen, phoneNumber, onClose, position }) => {
   };
 
   const handleCall = () => {
-    console.log('Calling:', dialedNumber);
-    // Add call logic here
+    if (dialedNumber) {
+      setIsDialling(true);
+      console.log('Calling:', dialedNumber);
+    }
+  };
+
+  const handleEndCall = () => {
+    setIsDialling(false);
   };
 
   const dialpadButtons = [
@@ -74,40 +90,69 @@ const WebphoneDialer = ({ isOpen, phoneNumber, onClose, position }) => {
           </button>
         </div>
 
-        {/* Content */}
-        <div className="webphone-content">
-          <div className="webphone-title">Web Phone</div>
-          
-          {/* Number Display */}
-          <div className="webphone-number-display">
-            <span className="dialed-number">{dialedNumber || 'Enter number'}</span>
-            {dialedNumber && (
-              <button type="button" className="clear-number" onClick={handleClear}>
-                <X size={14} />
-              </button>
-            )}
-          </div>
-
-          {/* Dialpad */}
-          <div className="webphone-dialpad">
-            {dialpadButtons.map((row, rowIndex) => (
-              <div key={rowIndex} className="dialpad-row">
-                {row.map((digit) => (
-                  <button
-                    key={digit}
-                    type="button"
-                    className="dialpad-btn"
-                    onClick={() => handleDigitPress(digit)}
-                  >
-                    {digit}
-                  </button>
-                ))}
+        {/* Content - Dialling State */}
+        {isDialling ? (
+          <div className="webphone-dialling">
+            <div className="dialling-number">{dialedNumber}</div>
+            <div className="dialling-status">
+              <span>Dialling</span>
+              <span className="dialling-dots">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </span>
+            </div>
+            <div className="dialling-animation">
+              <div className="pulse-circle"></div>
+              <div className="pulse-circle delay-1"></div>
+              <div className="pulse-circle delay-2"></div>
+              <div className="dialling-icon">
+                <Phone size={32} />
               </div>
-            ))}
+            </div>
+            <button 
+              type="button" 
+              className="end-call-btn"
+              onClick={handleEndCall}
+            >
+              <PhoneOff size={24} />
+            </button>
           </div>
+        ) : (
+          /* Content - Dialpad State */
+          <div className="webphone-content">
+            <div className="webphone-title">Web Phone</div>
+            
+            {/* Number Display */}
+            <div className="webphone-number-display">
+              <span className="dialed-number">{dialedNumber || 'Enter number'}</span>
+              {dialedNumber && (
+                <button type="button" className="clear-number" onClick={handleClear}>
+                  <X size={14} />
+                </button>
+              )}
+            </div>
 
-          {/* Action Buttons */}
-          <div className="webphone-actions">
+            {/* Dialpad */}
+            <div className="webphone-dialpad">
+              {dialpadButtons.map((row, rowIndex) => (
+                <div key={rowIndex} className="dialpad-row">
+                  {row.map((digit) => (
+                    <button
+                      key={digit}
+                      type="button"
+                      className="dialpad-btn"
+                      onClick={() => handleDigitPress(digit)}
+                    >
+                      {digit}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="webphone-actions">
             <button type="button" className="webphone-action-btn secondary">
               <Minus size={18} />
             </button>
