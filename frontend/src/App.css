@@ -220,6 +220,246 @@ body {
   cursor: not-allowed;
 }
 
+.mobile-icon-btn {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #3b82f6;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.mobile-icon-btn:hover {
+  background: #eff6ff;
+}
+
+.mobile-icon-btn.active {
+  background: #3b82f6;
+  color: white;
+}
+
+/* ==========================================
+   Webphone Dialer Styles
+   ========================================== */
+
+.webphone-dialer {
+  position: fixed;
+  display: flex;
+  z-index: 2000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.webphone-sidebar {
+  background: #f8fafc;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.sidebar-item:hover {
+  background: #e5e7eb;
+}
+
+.sidebar-item.active {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.sidebar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.sidebar-item.active .sidebar-dot {
+  background: #22c55e;
+}
+
+.webphone-main {
+  background: white;
+  width: 240px;
+}
+
+.webphone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: white;
+}
+
+.webphone-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.webphone-close {
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.webphone-close:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.webphone-content {
+  padding: 16px;
+}
+
+.webphone-title {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.webphone-number-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.dialed-number {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: 1px;
+}
+
+.clear-number {
+  background: #e5e7eb;
+  border: none;
+  color: #64748b;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-number:hover {
+  background: #d1d5db;
+  color: #374151;
+}
+
+.webphone-dialpad {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dialpad-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dialpad-btn {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dialpad-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.dialpad-btn:active {
+  background: #e5e7eb;
+  transform: scale(0.95);
+}
+
+.webphone-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.webphone-action-btn {
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.webphone-action-btn.secondary {
+  width: 40px;
+  height: 40px;
+  background: #374151;
+  color: white;
+}
+
+.webphone-action-btn.secondary:hover {
+  background: #1f2937;
+}
+
+.webphone-action-btn.call {
+  width: 56px;
+  height: 56px;
+  background: #22c55e;
+  color: white;
+}
+
+.webphone-action-btn.call:hover {
+  background: #16a34a;
+}
+
 .view-more-link {
   text-align: right;
   margin-top: 8px;
