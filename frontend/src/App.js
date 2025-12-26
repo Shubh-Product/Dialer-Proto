@@ -230,18 +230,6 @@ const MyDemosPopup = ({ onDialClick }) => {
                       <span className={`demo-status ${demo.status.toLowerCase()}`}>
                         {demo.status}
                       </span>
-                      {demo.status === 'Pending' && (
-                        <button 
-                          type="button"
-                          className="demo-call-icon"
-                          onClick={() => onDialClick(demo)}
-                          title="Dial"
-                          data-testid={`demo-dial-btn-${demo.id}`}
-                        >
-                          <Phone size={12} />
-                          Dial
-                        </button>
-                      )}
                     </div>
                   </div>
                 </div>
