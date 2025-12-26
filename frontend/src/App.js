@@ -215,7 +215,21 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
                   className="readonly-input"
                   placeholder="9814751033"
                 />
-                <Phone size={18} className="mobile-icon" />
+                <button 
+                  type="button" 
+                  className={`mobile-icon-btn ${showWebphone ? 'active' : ''}`}
+                  onClick={toggleWebphone}
+                >
+                  <Phone size={18} />
+                </button>
+                {showWebphone && (
+                  <WebphoneDialer
+                    isOpen={showWebphone}
+                    phoneNumber={formData.mobile}
+                    onClose={() => setShowWebphone(false)}
+                    position={webphonePosition}
+                  />
+                )}
               </div>
             </div>
             <div className="form-group">
