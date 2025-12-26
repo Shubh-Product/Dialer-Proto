@@ -508,6 +508,14 @@ const MyDemosPopup = ({ onDialClick }) => {
           </div>
         </div>
       )}
+
+      {/* Edit Lead Modal */}
+      <EditLeadModal
+        isOpen={isEditModalOpen}
+        demo={selectedDemo}
+        onClose={handleEditModalClose}
+        onSave={handleEditModalSave}
+      />
     </div>,
     document.body
   );
