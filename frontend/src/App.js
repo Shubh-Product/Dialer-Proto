@@ -160,9 +160,8 @@ const MyDemosPopup = ({ onDialClick }) => {
         <div className="my-demos-popup" data-testid="my-demos-popup">
           <div className="demos-popup-header">
             <div className="demos-header-left">
-              <Calendar size={18} />
               <h3>My Demos</h3>
-              <span className="demo-badge">{demos.filter(d => d.status === 'Pending').length} Pending</span>
+              <span className="demo-badge">{demos.filter(d => d.status === 'Pending').length}</span>
             </div>
             <div className="demos-header-actions">
               <button 
@@ -180,7 +179,8 @@ const MyDemosPopup = ({ onDialClick }) => {
           <div className="demos-tabs">
             <label className="demos-tab-item">
               <input 
-                type="checkbox" 
+                type="radio" 
+                name="demoDay"
                 checked={activeTab === 'Today'}
                 onChange={() => setActiveTab('Today')}
               />
@@ -188,7 +188,8 @@ const MyDemosPopup = ({ onDialClick }) => {
             </label>
             <label className="demos-tab-item">
               <input 
-                type="checkbox" 
+                type="radio" 
+                name="demoDay"
                 checked={activeTab === 'Tomorrow'}
                 onChange={() => setActiveTab('Tomorrow')}
               />
