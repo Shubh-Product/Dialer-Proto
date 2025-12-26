@@ -196,6 +196,30 @@ body {
   pointer-events: none;
 }
 
+.mobile-input-wrapper {
+  position: relative;
+}
+
+.mobile-input-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.mobile-input-wrapper .mobile-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #3b82f6;
+  pointer-events: none;
+}
+
+.readonly-input {
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  cursor: not-allowed;
+}
+
 .view-more-link {
   text-align: right;
   margin-top: 8px;
