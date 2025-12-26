@@ -345,6 +345,8 @@ const MyDemosPopup = ({ onDialClick }) => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('Today');
   const [pendingOnly, setPendingOnly] = useState(true); // Default selected
+  const [selectedDemo, setSelectedDemo] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     fetchDemos();
@@ -361,6 +363,21 @@ const MyDemosPopup = ({ onDialClick }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleRowClick = (demo) => {
+    setSelectedDemo(demo);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false);
+    setSelectedDemo(null);
+  };
+
+  const handleEditModalSave = (formData) => {
+    console.log('Saving lead data:', formData);
+    // Here you would typically call an API to save the data
   };
 
   const handleDeleteDemo = async (demoId) => {
