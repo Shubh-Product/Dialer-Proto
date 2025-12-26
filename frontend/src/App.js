@@ -2,10 +2,258 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import "@/App.css";
 import axios from "axios";
-import { Phone, Clock, ChevronUp, ChevronDown, Search, Filter, Plus, PhoneCall, PhoneOff, X, Minus, Calendar, MessageCircle, History } from "lucide-react";
+import { Phone, Clock, ChevronUp, ChevronDown, Search, Filter, Plus, PhoneCall, PhoneOff, X, Minus, Calendar, MessageCircle, History, CalendarDays } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Edit Lead Modal Component
+const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
+  const [formData, setFormData] = useState({
+    mobile: '',
+    contactPersonName: '',
+    assignedTo: 'Pawan Mittal',
+    product: '',
+    updateType: 'call',
+    stage: 'New Lead',
+    priority: 'Warm',
+    callDisposition: '',
+    nextFollowUpType: 'Call',
+    nextFollowUp: '',
+    followUpRemarks: ''
+  });
+
+  useEffect(() => {
+    if (demo) {
+      setFormData(prev => ({
+        ...prev,
+        mobile: demo.mobile || '',
+        contactPersonName: demo.client_name || '',
+      }));
+    }
+  }, [demo]);
+
+  if (!isOpen || !demo) return null;
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSave = () => {
+    onSave(formData);
+    onClose();
+  };
+
+  const formatDate = () => {
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.toLocaleString('en-US', { month: 'short' });
+    const year = now.getFullYear().toString().slice(-2);
+    return `${day} ${month} ${year}`;
+  };
+
+  return createPortal(
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="edit-lead-modal" onClick={(e) => e.stopPropagation()} data-testid="edit-lead-modal">
+        {/* Header */}
+        <div className="edit-lead-header">
+          <div className="edit-lead-header-left">
+            <h2>Edit Lead</h2>
+            <div className="edit-lead-meta">
+              <span className="meta-item">Lead ID: <strong>{demo.id?.slice(0, 6) || '711450'}</strong></span>
+              <span className="meta-item">{formatDate()}</span>
+              <span className="meta-item">Existing Services: <strong>N/A</strong></span>
+            </div>
+          </div>
+          <button type="button" className="edit-lead-close" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Lead Details Section */}
+        <div className="edit-lead-section">
+          <h3 className="section-title">Lead Details</h3>
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Mobile <span className="required">*</span></label>
+              <input 
+                type="text" 
+                value={formData.mobile}
+                onChange={(e) => handleChange('mobile', e.target.value)}
+                placeholder="Enter Mobile"
+              />
+            </div>
+            <div className="form-group">
+              <label>Contact Person Name</label>
+              <input 
+                type="text" 
+                value={formData.contactPersonName}
+                onChange={(e) => handleChange('contactPersonName', e.target.value)}
+                placeholder="Enter Contact Person Name"
+              />
+            </div>
+            <div className="form-group">
+              <label>Assigned To <span className="required">*</span></label>
+              <select 
+                value={formData.assignedTo}
+                onChange={(e) => handleChange('assignedTo', e.target.value)}
+              >
+                <option value="Pawan Mittal">Pawan Mittal</option>
+                <option value="Raj Kumar">Raj Kumar</option>
+                <option value="Priya Singh">Priya Singh</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Product</label>
+              <input 
+                type="text" 
+                value={formData.product}
+                onChange={(e) => handleChange('product', e.target.value)}
+                placeholder="Enter Product"
+              />
+            </div>
+          </div>
+          <div className="view-more-link">
+            <a href="#more">View More</a>
+          </div>
+        </div>
+
+        {/* Follow Up Update Section */}
+        <div className="edit-lead-section">
+          <h3 className="section-title">Follow Up Update</h3>
+          
+          <div className="form-group">
+            <label>Update Type</label>
+            <div className="radio-group">
+              <label className="radio-item">
+                <input 
+                  type="radio" 
+                  name="updateType" 
+                  value="call"
+                  checked={formData.updateType === 'call'}
+                  onChange={(e) => handleChange('updateType', e.target.value)}
+                />
+                <span>Call (Phone/VC)</span>
+              </label>
+              <label className="radio-item">
+                <input 
+                  type="radio" 
+                  name="updateType" 
+                  value="meeting"
+                  checked={formData.updateType === 'meeting'}
+                  onChange={(e) => handleChange('updateType', e.target.value)}
+                />
+                <span>Meeting (In-Person)</span>
+              </label>
+              <label className="radio-item">
+                <input 
+                  type="radio" 
+                  name="updateType" 
+                  value="general"
+                  checked={formData.updateType === 'general'}
+                  onChange={(e) => handleChange('updateType', e.target.value)}
+                />
+                <span>General</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Stage <span className="required">*</span></label>
+              <select 
+                value={formData.stage}
+                onChange={(e) => handleChange('stage', e.target.value)}
+              >
+                <option value="New Lead">New Lead</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Qualified">Qualified</option>
+                <option value="Proposal">Proposal</option>
+                <option value="Negotiation">Negotiation</option>
+                <option value="Closed Won">Closed Won</option>
+                <option value="Closed Lost">Closed Lost</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Priority</label>
+              <select 
+                value={formData.priority}
+                onChange={(e) => handleChange('priority', e.target.value)}
+              >
+                <option value="Hot">Hot</option>
+                <option value="Warm">Warm</option>
+                <option value="Cold">Cold</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Call Disposition <span className="required">*</span></label>
+              <select 
+                value={formData.callDisposition}
+                onChange={(e) => handleChange('callDisposition', e.target.value)}
+              >
+                <option value="">Select Call Disposition</option>
+                <option value="Connected">Connected</option>
+                <option value="Not Answered">Not Answered</option>
+                <option value="Busy">Busy</option>
+                <option value="Wrong Number">Wrong Number</option>
+                <option value="Call Back">Call Back</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-grid form-grid-2">
+            <div className="form-group">
+              <label>Next Follow Up Type <span className="required">*</span></label>
+              <select 
+                value={formData.nextFollowUpType}
+                onChange={(e) => handleChange('nextFollowUpType', e.target.value)}
+              >
+                <option value="Call">Call</option>
+                <option value="Meeting">Meeting</option>
+                <option value="Email">Email</option>
+                <option value="WhatsApp">WhatsApp</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Next Follow Up <span className="required">*</span></label>
+              <div className="date-input-wrapper">
+                <input 
+                  type="text" 
+                  value={formData.nextFollowUp}
+                  onChange={(e) => handleChange('nextFollowUp', e.target.value)}
+                  placeholder="Select Next Follow Up"
+                />
+                <CalendarDays size={18} className="date-icon" />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group full-width">
+            <label>Follow Up Remarks</label>
+            <textarea 
+              value={formData.followUpRemarks}
+              onChange={(e) => handleChange('followUpRemarks', e.target.value)}
+              placeholder="Enter Remarks"
+              rows={4}
+            />
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="edit-lead-footer">
+          <button type="button" className="btn-view-history">
+            <History size={16} />
+            View History
+          </button>
+          <button type="button" className="btn-save-details" onClick={handleSave}>
+            Save Details
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
 
 // Shared Dialing Modal Component
 const DialingModal = ({ isOpen, lead, callInProgress, onClose, onStartCall, onEndCall }) => {
