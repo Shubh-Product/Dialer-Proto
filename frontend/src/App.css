@@ -105,13 +105,17 @@ body {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px 20px;
   margin-bottom: 12px;
 }
 
 .form-grid-2 {
   grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .form-group {
