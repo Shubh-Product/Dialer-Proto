@@ -479,7 +479,12 @@ const MyDemosPopup = ({ onDialClick }) => {
               <div className="demos-empty">No demos scheduled for {activeTab}</div>
             ) : (
               filteredDemos.map((demo) => (
-                <div key={demo.id} className="demos-row" data-testid={`demo-row-${demo.id}`}>
+                <div 
+                  key={demo.id} 
+                  className="demos-row clickable" 
+                  data-testid={`demo-row-${demo.id}`}
+                  onClick={() => handleRowClick(demo)}
+                >
                   <div className="demos-col time-col">
                     {demo.time_slot}
                   </div>
