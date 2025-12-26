@@ -1113,6 +1113,14 @@ body {
   transition: background 0.15s;
 }
 
+.demos-row.clickable {
+  cursor: pointer;
+}
+
+.demos-row.clickable:hover {
+  background: #e0f2fe;
+}
+
 .demos-row:hover {
   background: #f8fafc;
 }
