@@ -7,6 +7,123 @@ import { Phone, Clock, ChevronUp, ChevronDown, Search, Filter, Plus, PhoneCall, 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Webphone Dialer Popup Component
+const WebphoneDialer = ({ isOpen, phoneNumber, onClose, position }) => {
+  const [dialedNumber, setDialedNumber] = useState('');
+
+  useEffect(() => {
+    if (phoneNumber) {
+      setDialedNumber(phoneNumber);
+    }
+  }, [phoneNumber]);
+
+  if (!isOpen) return null;
+
+  const handleDigitPress = (digit) => {
+    setDialedNumber(prev => prev + digit);
+  };
+
+  const handleClear = () => {
+    setDialedNumber('');
+  };
+
+  const handleCall = () => {
+    console.log('Calling:', dialedNumber);
+    // Add call logic here
+  };
+
+  const dialpadButtons = [
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    ['7', '8', '9'],
+    ['*', '0', '#']
+  ];
+
+  return (
+    <div 
+      className="webphone-dialer" 
+      style={{ top: position?.top || 0, left: position?.left || 0 }}
+      data-testid="webphone-dialer"
+    >
+      {/* Sidebar */}
+      <div className="webphone-sidebar">
+        <div className="sidebar-item active">
+          <span className="sidebar-dot"></span>
+          <span>L1</span>
+        </div>
+        <div className="sidebar-item">
+          <span className="sidebar-dot"></span>
+          <span>L2</span>
+        </div>
+        <div className="sidebar-item">
+          <span className="sidebar-dot"></span>
+          <span>L3</span>
+        </div>
+      </div>
+
+      {/* Main Dialer */}
+      <div className="webphone-main">
+        {/* Header */}
+        <div className="webphone-header">
+          <div className="webphone-header-left">
+            <Phone size={18} />
+            <span>Webphone</span>
+          </div>
+          <button type="button" className="webphone-close" onClick={onClose}>
+            <X size={16} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="webphone-content">
+          <div className="webphone-title">Web Phone</div>
+          
+          {/* Number Display */}
+          <div className="webphone-number-display">
+            <span className="dialed-number">{dialedNumber || 'Enter number'}</span>
+            {dialedNumber && (
+              <button type="button" className="clear-number" onClick={handleClear}>
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          {/* Dialpad */}
+          <div className="webphone-dialpad">
+            {dialpadButtons.map((row, rowIndex) => (
+              <div key={rowIndex} className="dialpad-row">
+                {row.map((digit) => (
+                  <button
+                    key={digit}
+                    type="button"
+                    className="dialpad-btn"
+                    onClick={() => handleDigitPress(digit)}
+                  >
+                    {digit}
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="webphone-actions">
+            <button type="button" className="webphone-action-btn secondary">
+              <Minus size={18} />
+            </button>
+            <button type="button" className="webphone-action-btn call" onClick={handleCall}>
+              <Phone size={20} />
+            </button>
+            <button type="button" className="webphone-action-btn secondary">
+              <PhoneOff size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Edit Lead Modal Component
 const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
   const [formData, setFormData] = useState({
@@ -22,6 +139,9 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
     nextFollowUp: '',
     followUpRemarks: ''
   });
+  const [showWebphone, setShowWebphone] = useState(false);
+  const [webphonePosition, setWebphonePosition] = useState({ top: 0, left: 0 });
+  const mobileFieldRef = useState(null);
 
   useEffect(() => {
     if (demo) {
@@ -42,6 +162,17 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
   const handleSave = () => {
     onSave(formData);
     onClose();
+  };
+
+  const toggleWebphone = (e) => {
+    if (!showWebphone) {
+      const rect = e.currentTarget.closest('.mobile-input-wrapper').getBoundingClientRect();
+      setWebphonePosition({
+        top: rect.bottom + 8,
+        left: rect.left
+      });
+    }
+    setShowWebphone(!showWebphone);
   };
 
   const formatDate = () => {
