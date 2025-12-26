@@ -80,7 +80,7 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
                 type="text" 
                 value={formData.mobile}
                 onChange={(e) => handleChange('mobile', e.target.value)}
-                placeholder="Enter Mobile"
+                placeholder="9814751033"
               />
             </div>
             <div className="form-group">
@@ -105,12 +105,15 @@ const EditLeadModal = ({ isOpen, demo, onClose, onSave }) => {
             </div>
             <div className="form-group">
               <label>Product</label>
-              <input 
-                type="text" 
+              <select 
                 value={formData.product}
                 onChange={(e) => handleChange('product', e.target.value)}
-                placeholder="Enter Product"
-              />
+              >
+                <option value="">Enter Product</option>
+                <option value="Product A">Product A</option>
+                <option value="Product B">Product B</option>
+                <option value="Product C">Product C</option>
+              </select>
             </div>
           </div>
           <div className="view-more-link">
